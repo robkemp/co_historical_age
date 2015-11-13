@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(dplyr)\nlibrary(tidyr)\nlibrary(car)\nlibrary(ggplot2)\nlibrary(codemog)\nlibrary(grid)\n\nsya=readr::read_csv(\"co_pop_sya_1900_2050.csv\")%>%\n  gather(year, population, -AGE)%>%\n  rename(age=AGE)%>%\n  filter(!is.na(age))%>%\n  mutate(age=recode(age, \"90:101=90\"),\n         year=levels(year)[year])%>%\n  group_by(year, age)%>%\n  summarise(population=sum(population))%>%\n  ungroup()\n\ne0=readxl::read_excel(\"Life Expectancy at Birth (Total).xlsx\", skip=2)%>%\n  gather(year, lifeExpectancy, -Code)%>%\n  select(year, lifeExpectancy)\n\n\np=sya%>%\n  filter(age<90)%>%\n  ggplot(aes(x=age, y=population, color=year))+\n  geom_line()\np",
+    "created" : 1447450421471.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2892930882",
+    "id" : "5D5A8853",
+    "lastKnownWriteTime" : 1447453195,
+    "path" : "J:/Estimates/Other/Research/co_historical_age/EDAScript.R",
+    "project_path" : "EDAScript.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
